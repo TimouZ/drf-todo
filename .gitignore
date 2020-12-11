@@ -1,2 +1,24 @@
 manage.py
 *.sqlite3
+
+# Virtualenv
+.venv
+venv/
+ENV/
+.vscode
+
+# Migrations
+**/migrations/**
+!**/migrations
+!**/migrations/__init__.py
+
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+### Django ###
+*.log
+*.pot
+*.pyc
+local_settings.py
