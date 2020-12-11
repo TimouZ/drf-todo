@@ -11,7 +11,6 @@ urlpatterns = [
     path('', include(router.urls)),
     path('api_login', views.user_login),
     path('user_list/', views.UserList.as_view(), name='user_list'),
-    path('django_user_create', views.DjangoUserCreate.as_view(), name='django_user_create'),
     path('user_create/', views.UserCreate.as_view(), name='user_create'),
     path('user_retrieve_update_destroy/<int:pk>',
          views.UserRetrieveUpdateDestroy.as_view(),

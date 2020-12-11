@@ -12,7 +12,7 @@ from rest_framework.authtoken.models import Token
 from rest_framework.status import HTTP_200_OK
 
 from .models import Task, User
-from .serializers import DjangoUserSerializer, UserModelSerializer, TaskModelSerializer
+from .serializers import UserModelSerializer, TaskModelSerializer
 
 
 @csrf_exempt
@@ -43,13 +43,8 @@ class UserList(APIView):
         return Response(serializer.data)
 
 
-class DjangoUserCreate(CreateAPIView):
-    permission_classes = (AllowAny,)
-    serializer_class = DjangoUserSerializer
-
-
 class UserCreate(CreateAPIView):
-    permission_classes = (IsAdminUser,)
+    permission_classes = (AllowAny,)
     serializer_class = UserModelSerializer
 
 
