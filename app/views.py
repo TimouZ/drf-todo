@@ -6,7 +6,7 @@ from rest_framework.views import APIView
 from rest_framework import viewsets
 from rest_framework.generics import CreateAPIView, UpdateAPIView, DestroyAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.decorators import api_view, permission_classes
-from rest_framework.permissions import AllowAny, IsAdminUser
+from rest_framework import permissions
 from rest_framework.response import Response
 from rest_framework.authtoken.models import Token
 from rest_framework.status import HTTP_200_OK
@@ -14,10 +14,12 @@ from rest_framework.status import HTTP_200_OK
 from .models import Task, User
 from .serializers import UserModelSerializer, TaskModelSerializer
 
+from .permissions import IsOwner
+
 
 @csrf_exempt
 @api_view(["POST"])
-@permission_classes((AllowAny,))
+@permission_classes((permissions.AllowAny,))
 def user_login(request):
     """ Function based view function designed to create user token
     Provide correct login+password pair to get the token
@@ -44,12 +46,12 @@ class UserList(APIView):
 
 
 class UserCreate(CreateAPIView):
-    permission_classes = (AllowAny,)
+    permission_classes = (permissions.AllowAny,)
     serializer_class = UserModelSerializer
 
 
 class UserRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
-    permission_classes = (IsAdminUser,)
+    permission_classes = (permissions.IsAdminUser,)
     queryset = User.objects.all()
     serializer_class = UserModelSerializer
 
@@ -85,3 +87,11 @@ class UserRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
 class TaskModelViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
     serializer_class = TaskModelSerializer
+
+    def get_permissions(self):
+        """Set custom permissions for each action."""
+        if self.action in ['update', 'partial_update', 'destroy']:
+            self.permission_classes = [IsOwner]
+        elif self.action in ['list', 'retrieve', 'create']:
+            self.permission_classes = [permissions.IsAuthenticated]
+        return super().get_permissions()
