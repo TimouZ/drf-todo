@@ -66,3 +66,7 @@ class TaskModelViewSet(viewsets.ModelViewSet):
         elif self.action in ['list', 'retrieve', 'create']:
             self.permission_classes = [permissions.IsAuthenticated]
         return super().get_permissions()
+
+    def perform_create(self, serializer):
+        """Current user will be set as task owner during create process"""
+        serializer.save(owner=self.request.user)
