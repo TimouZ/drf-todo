@@ -1,10 +1,9 @@
-from django.shortcuts import get_object_or_404
 from django.contrib.auth import authenticate
 from django.views.decorators.csrf import csrf_exempt
 
 from rest_framework.views import APIView
 from rest_framework import viewsets
-from rest_framework.generics import CreateAPIView, UpdateAPIView, DestroyAPIView, RetrieveUpdateDestroyAPIView
+from rest_framework.generics import CreateAPIView, RetrieveUpdateDestroyAPIView
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework import permissions
 from rest_framework.response import Response
@@ -55,34 +54,6 @@ class UserRetrieveUpdateDestroy(RetrieveUpdateDestroyAPIView):
     queryset = User.objects.all()
     serializer_class = UserModelSerializer
 
-
-# class TaskCreate(CreateAPIView):
-#     serializer_class = TaskModelSerializer
-#
-#
-# class TaskUpdate(UpdateAPIView):
-#     # permission_classes = (IsAdminUser,)
-#     queryset = Task.objects.all()
-#     serializer_class = TaskModelSerializer
-#
-#
-# class TaskDestroy(DestroyAPIView):
-#     # permission_classes = (IsAdminUser,)
-#     queryset = Task.objects.all()
-#     serializer_class = TaskModelSerializer
-#
-#
-# class TaskList(viewsets.ViewSet):
-#     queryset = Task.objects.all()
-#
-#     def list(self, request):
-#         serializer = TaskModelSerializer(self.queryset, many=True)
-#         return Response(serializer.data)
-#
-#     def retrieve(self, request, pk=None):
-#         user = get_object_or_404(self.queryset, pk=pk)
-#         serializer = TaskModelSerializer(user)
-#         return Response(serializer.data)
 
 class TaskModelViewSet(viewsets.ModelViewSet):
     queryset = Task.objects.all()
