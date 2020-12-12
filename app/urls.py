@@ -4,11 +4,8 @@ from rest_framework import routers
 
 from . import views
 
-# router = routers.SimpleRouter()
-# router.register(r'task_list', views.TaskList)
-
-router = routers.SimpleRouter()
-router.register(r'task_list', views.TaskModelViewSet)
+router = routers.DefaultRouter()
+router.register(r'task', views.TaskModelViewSet)
 
 
 urlpatterns = [
@@ -19,7 +16,4 @@ urlpatterns = [
     path('user_retrieve_update_destroy/<int:pk>',
          views.UserRetrieveUpdateDestroy.as_view(),
          name='user_retrieve_update_destroy'),
-    # path('task_create/', views.TaskCreate.as_view(), name='task_create'),
-    # path('task_update/<int:pk>', views.TaskUpdate.as_view(), name='task_update'),
-    # path('task_destroy/<int:pk>', views.TaskDestroy.as_view(), name='task_destroy'),
 ]
